@@ -1,11 +1,14 @@
 package com.hoc.training.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +18,9 @@ import com.hoc.training.model.Product;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
+    private List<Product> products = new ArrayList<>();
+    private ProductDummy dummy = new ProductDummy();
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
@@ -40,5 +46,18 @@ public class ProductController {
     @GetMapping
     public List<Product> getAllProducts() {
         return new ProductDummy().getProducts();
+    }
+
+    @PostMapping()
+    public ResponseEntity<List<Product>> addProduct(@RequestBody Product product) {
+        products.add(product);
+        return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<ProductDummy> addDummy(@RequestBody Product product) {
+        dummy.addProductDummy(product);
+
+        return new ResponseEntity<ProductDummy>(dummy, HttpStatus.OK);
     }
 }
