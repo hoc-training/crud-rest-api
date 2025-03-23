@@ -48,6 +48,12 @@ public class ProductController {
         return new ProductDummy().getProducts();
     }
 
+    /**
+     * get data from private list
+     * 
+     * @param product
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<List<Product>> addProduct(@RequestBody Product product) {
         products.add(product);
