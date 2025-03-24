@@ -8,9 +8,10 @@ import com.hoc.training.model.Product;
 public class ProductDummy {
 
     private List<Product> products = new ArrayList<>();
+    private Product product = new Product();
 
     public Product getProductById(Long id) {
-        Product product = new Product();
+        product = new Product();
         product.setDescription("Deskripsi produk");
         product.setId(1L);
         product.setName("Nama Produk");
@@ -21,7 +22,6 @@ public class ProductDummy {
 
     public List<Product> getProducts() {
         for (int i = 1; i < 10; i++) {
-            Product product = new Product();
             product = new Product();
             product.setDescription("Deskripsi produk " + i);
             product.setId(Long.valueOf(i));
