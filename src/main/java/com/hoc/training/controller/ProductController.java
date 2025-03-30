@@ -1,9 +1,7 @@
 package com.hoc.training.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hoc.training.dummy.ProductDummy;
-import com.hoc.training.dummy.UserDummy;
 import com.hoc.training.model.Product;
-import com.hoc.training.model.User;
 
 @RestController
 @RequestMapping("/api/products")
@@ -30,7 +26,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = new ProductDummy().getProductById(1L);
+        Product product = new ProductDummy().getProductById(id);
         if (product.getId() == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -12,6 +12,8 @@
 
 ---
 
+# Setext style H1
+
 # List
 
 ## Ordered List
@@ -24,6 +26,12 @@
 - List 1
 - List 2
 
+### Undered List Other Format
+
+- Item 1
+- Item 2
+- Item 3
+
 ## Nested List
 
 1. List 1
@@ -31,6 +39,15 @@
 
 - List 2
   - List 2.1
+
+### Nested List Other Format
+
+- Item 1
+  - Item 2
+    - Item 3
+  - Item 4
+- Item 4
+  - Item 5
 
 ## Task List
 

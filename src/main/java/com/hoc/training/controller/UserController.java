@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getProductById(@PathVariable Long id) {
-        User user = new UserDummy().getUserById(1L);
+        User user = new UserDummy().getUserById(id);
         if (user.getId() == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -104,5 +104,15 @@ public class UserController {
         tmp.remove(dataRemoved);
 
         return new ResponseEntity<List<User>>(tmp, HttpStatus.OK);
+    }
+
+    @GetMapping("/id/{id}")
+    public String getUserById(@PathVariable Long id) {
+        User user = new UserDummy().getUserById(id);
+        if (user.equals(null)) {
+            return "Data not found";
+        }
+
+        return user.toString();
     }
 }
