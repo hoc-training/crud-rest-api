@@ -1,4 +1,4 @@
-package com.hoc.training.model;
+package com.hoc.training.entity;
 
 import lombok.Getter;
 import lombok.Setter;

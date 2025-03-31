@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hoc.training.dummy.ProductDummy;
-import com.hoc.training.model.Product;
+import com.hoc.training.entity.Product;
 
 @RestController
 @RequestMapping("/api/products")

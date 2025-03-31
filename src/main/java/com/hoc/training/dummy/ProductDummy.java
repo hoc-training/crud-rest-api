@@ -3,7 +3,7 @@ package com.hoc.training.dummy;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hoc.training.model.Product;
+import com.hoc.training.entity.Product;
 
 public class ProductDummy {
 

@@ -1,6 +1,6 @@
 package com.hoc.training.dummy;
 
-import com.hoc.training.model.Role;
+import com.hoc.training.entity.Role;
 
 public class RoleDummy {
 

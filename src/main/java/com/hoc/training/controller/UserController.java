@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hoc.training.dummy.UserDummy;
-import com.hoc.training.model.User;
+import com.hoc.training.entity.User;
 
 @RestController
 @RequestMapping("/api/users")
