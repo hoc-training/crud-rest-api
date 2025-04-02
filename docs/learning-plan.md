@@ -10,8 +10,8 @@
 - [x] using dto, validation(@Valid)
 - [x] using dto, custom validation(@Valid)
 - [x] using dto, validation(@Validated)
-- [ ] using unit test: @Test, @DisplayName
-- [ ] using unit test: Assertions
+- [x] using unit test: @Test, @DisplayName
+- [ ] using unit test: with and without Assertions
 - [ ] using unit test: @BeforeEach, @AfterEach
 - [ ] using unit test: @BeforeAll, @AfterAll
 - [ ] using unit test: Assumptions
