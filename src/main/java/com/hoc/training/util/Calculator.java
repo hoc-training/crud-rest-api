@@ -7,6 +7,10 @@ public class Calculator {
     }
 
     public Integer substract(Integer a, Integer b) {
-        return a - b;
+        if (a == null || b == null) {
+            throw new NullPointerException("Can not null");
+        } else {
+            return a - b;
+        }
     }
 }

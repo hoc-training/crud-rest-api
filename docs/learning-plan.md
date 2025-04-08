@@ -11,16 +11,16 @@
 - [x] using dto, custom validation(@Valid)
 - [x] using dto, validation(@Validated)
 - [x] using unit test: @Test, @DisplayName
-- [ ] using unit test: with and without Assertions
-- [ ] using unit test: @BeforeEach, @AfterEach
-- [ ] using unit test: @BeforeAll, @AfterAll
-- [ ] using unit test: Assumptions
-- [ ] using unit test: @EnabledOnOS, @DisabledOnOS
-- [ ] using unit test: @EnabledOnJre, @DisabledOnJre
-- [ ] using unit test: @EnabledForJreRange, @DisabledForJreRange
-- [ ] using unit test: @EnabledIfEnvironmentVariable, @DisabledIfEnvironmentVariable
-- [ ] using unit test: @Tag
-- [ ] using unit test: @TestMethodOrder, @Order
+- [x] using unit test: with and without Assertions
+- [x] using unit test: @BeforeEach, @AfterEach
+- [x] using unit test: @BeforeAll, @AfterAll
+- [x] using unit test: Assumptions
+- [x] using unit test: @EnabledOnOS, @DisabledOnOS
+- [x] using unit test: @EnabledOnJre, @DisabledOnJre
+- [x] using unit test: @EnabledForJreRange, @DisabledForJreRange
+- [x] using unit test: @EnabledIfEnvironmentVariable, @DisabledIfEnvironmentVariable
+- [x] using unit test: @Tag
+- [x] using unit test: @TestMethodOrder, @Order
 - [ ] using unit test: @TestInstance, Lifecycle
 - [ ] using unit test: @Nested
 - [ ] using unit test: @RepeatedTest
