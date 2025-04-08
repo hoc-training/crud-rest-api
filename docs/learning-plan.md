@@ -21,7 +21,7 @@
 - [x] using unit test: @EnabledIfEnvironmentVariable, @DisabledIfEnvironmentVariable
 - [x] using unit test: @Tag
 - [x] using unit test: @TestMethodOrder, @Order
-- [ ] using unit test: @TestInstance, Lifecycle
+- [x] using unit test: @TestInstance, Lifecycle
 - [ ] using unit test: @Nested
 - [ ] using unit test: @RepeatedTest
 - [ ] using unit test: @ParameterizedTest
