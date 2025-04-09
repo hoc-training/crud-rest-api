@@ -2,9 +2,13 @@ package com.hoc.training.util;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 
@@ -55,10 +59,24 @@ public class Sample2Test {
         System.out.println(counter);
     }
 
-    @Test
     @Order(2)
+    @DisplayName("Test repeated")
+    @RepeatedTest(
+        value = 10,
+        name = "{displayName} ke {currentRepetition} dari {totalRepetitions}"
+    )
     void test3() {
         counter++;
         System.out.println(counter);
+    }
+
+    @DisplayName("Test repeated info")
+    @RepeatedTest(
+        value = 10, name = "{displayName}"
+    )
+    void test4(TestInfo testInfo, RepetitionInfo info) {
+        counter++;
+        System.out.println(counter);
+        System.out.println(testInfo.getDisplayName() +" "+ info.getCurrentRepetition() + " and " + info.getTotalRepetitions());
     }
 }

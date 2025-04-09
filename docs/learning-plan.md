@@ -22,8 +22,9 @@
 - [x] using unit test: @Tag
 - [x] using unit test: @TestMethodOrder, @Order
 - [x] using unit test: @TestInstance, Lifecycle
-- [ ] using unit test: @Nested
-- [ ] using unit test: @RepeatedTest
+- [x] using unit test: @Nested
+- [x] using unit test: TestInfo
+- [x] using unit test: @RepeatedTest
 - [ ] using unit test: @ParameterizedTest
 - [ ] using unit test: @Timeout
 - [ ] using unit test: Paralel Test
