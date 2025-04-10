@@ -25,12 +25,12 @@
 - [x] using unit test: @Nested
 - [x] using unit test: TestInfo
 - [x] using unit test: @RepeatedTest
-- [ ] using unit test: @ParameterizedTest
-- [ ] using unit test: @Timeout
-- [ ] using unit test: Paralel Test
-- [ ] using unit test: Mocking
-- [ ] using unit test: Integrasi mocking & junit
-- [ ] using unit test: Verifikasi mocking
+- [x] using unit test: @ParameterizedTest
+- [x] using unit test: @Timeout
+- [x] using unit test: Paralel Test
+- [x] using unit test: Mocking
+- [x] using unit test: Integrasi mocking & junit
+- [x] using unit test: Verifikasi mocking
 - [ ] using relation
 - [ ] query relation
 - [ ] using temporary storage and db 1 table
