@@ -31,8 +31,8 @@
 - [x] using unit test: Mocking
 - [x] using unit test: Integrasi mocking & junit
 - [x] using unit test: Verifikasi mocking
-- [ ] connect to db (jdbc), connection pool
-- [ ] using relation
+- [x] connect to db (jdbc), connection pool
+- [x] using relation
 - [ ] query relation
 - [ ] using temporary storage and db 1 table
 - [ ] using temprary storage and db 2 table
