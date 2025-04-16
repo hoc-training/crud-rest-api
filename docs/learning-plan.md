@@ -33,9 +33,10 @@
 - [x] using unit test: Verifikasi mocking
 - [x] connect to db (jdbc), connection pool
 - [x] using relation
-- [ ] query relation
-- [ ] using temporary storage and db 1 table
-- [ ] using temprary storage and db 2 table
+- [x] query method
+- [x] query relation
+- [x] using temporary storage and db 1 table
+- [x] using temprary storage and db 2 table
 - [ ] using temprary storage and db header-detail
 - [ ] using redis
 
