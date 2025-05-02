@@ -38,6 +38,7 @@
 - [x] using temporary storage and db 1 table
 - [x] using temprary storage and db 2 table
 - [x] using temprary storage and db header-detail
+- [x] using spring redis: config, redis template, value, list, set, zset
 
 # PLANNING
 
