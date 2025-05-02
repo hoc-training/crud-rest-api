@@ -37,8 +37,7 @@
 - [x] query relation
 - [x] using temporary storage and db 1 table
 - [x] using temprary storage and db 2 table
-- [ ] using temprary storage and db header-detail
-- [ ] using redis
+- [x] using temprary storage and db header-detail
 
 # PLANNING
 
