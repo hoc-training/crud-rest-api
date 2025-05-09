@@ -14,7 +14,11 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.connection.stream.Consumer;
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.connection.stream.ReadOffset;
@@ -29,13 +33,27 @@ import org.springframework.data.redis.core.StreamOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.support.collections.DefaultRedisMap;
+import org.springframework.data.redis.support.collections.RedisList;
+import org.springframework.data.redis.support.collections.RedisSet;
+import org.springframework.data.redis.support.collections.RedisZSet;
 import org.springframework.lang.Nullable;
+
+import com.hoc.training.redisrepository.Book;
+import com.hoc.training.redisrepository.BookRepository;
+import com.hoc.training.redisrepository.BookService;
 
 @SpringBootTest
 public class RedisTest {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Test
     void redisTemplate() {
@@ -214,5 +232,165 @@ public class RedisTest {
         for(MapRecord<String, Object, Object> record : records) {
             System.out.println(record);
         }
+    }
+
+    @Test
+    void pubSub() {
+        redisTemplate.getConnectionFactory().getConnection().subscribe(new MessageListener() {
+
+            @Override
+            public void onMessage(Message message, @Nullable byte[] pattern) {
+                String event = new String(message.getBody());
+                System.out.println("Message: " + event);
+            }
+        }, "my:channel".getBytes());
+
+        redisTemplate.getConnectionFactory().getConnection().subscribe(new MessageListener() {
+
+            @Override
+            public void onMessage(Message message, @Nullable byte[] pattern) {
+                String event = new String(message.getBody());
+                System.out.println("Message: " + event);
+            }
+        }, "my:channel".getBytes());
+
+        for(int i = 0; i < 10; i++) {
+            redisTemplate.convertAndSend("my:channel", "Hi.. " + i);
+        }
+    }
+
+    @Test
+    void redisList() {
+        List<String> list = RedisList.create("customers", redisTemplate);
+        list.add("Budi");
+        list.add("Budiman");
+        list.add("Dorami");
+        assertThat(list, hasItems("Budi", "Budiman", "Dorami"));
+
+        List<String> result = redisTemplate.opsForList().range("customers", 0, -1);
+        assertThat(result, hasItems("Budi", "Budiman", "Dorami"));
+    }
+
+    @Test
+    void redisSet() {
+        Set<String> set = RedisSet.create("roles", redisTemplate);
+        set.addAll(Set.of("role", "admin", "satu"));
+        set.addAll(Set.of("role", "admin", "dua"));
+        set.addAll(Set.of("role", "admin", "tiga"));
+        assertThat(set, hasItems("role", "admin", "satu", "dua", "tiga"));
+
+        Set<String> result = redisTemplate.opsForSet().members("roles");
+        assertThat(result, hasItems("role", "admin", "satu", "dua", "tiga"));
+    }
+
+    @Test
+    void redisZSet() {
+        RedisZSet<String> set = RedisZSet.create("rank", redisTemplate);
+        set.add("Cahya", 100);
+        set.add("Darma", 80);
+        set.add("Dori", 90);
+        assertThat(set, hasItems("Cahya", "Darma", "Dori"));
+
+        Set<String> result = redisTemplate.opsForZSet().range("rank", 0, -1);
+        assertThat(result, hasItems("Cahya", "Darma", "Dori"));
+
+        assertEquals("Cahya", set.popLast());
+        assertEquals("Dori", set.popLast());
+        assertEquals("Darma", set.popLast());
+    }
+
+    @Test
+    void redisMap() {
+        Map<String, String> map = new DefaultRedisMap<>("country:1", redisTemplate);
+        map.put("name", "England");
+        map.put("code", "UK");
+        assertThat(map, hasEntry("name", "England"));
+        assertThat(map, hasEntry("code", "UK"));
+
+        Map<Object, Object> result = redisTemplate.opsForHash().entries("country:1");
+        assertThat(result, hasEntry("name", "England"));
+        assertThat(result, hasEntry("code", "UK"));
+    }
+
+    @Test
+    void redisRepository() {
+        Book book = Book.builder()
+            .id("1")
+            .title("Book 1")
+            .price(50_000L)
+            .build();
+        bookRepository.save(book);
+
+        Map<Object, Object> map = redisTemplate.opsForHash().entries("books:1");
+        assertEquals(book.getId(), map.get("id"));
+        assertEquals(book.getTitle(), map.get("title"));
+        assertEquals(book.getPrice().toString(), map.get("price"));
+
+        Book book2 = bookRepository.findById("1").get();
+        assertEquals(book, book2);
+    }
+
+    @Test
+    void ttl() throws InterruptedException {
+        Book book = Book.builder()
+            .id("1")
+            .title("Book 1")
+            .price(50_000L)
+            .ttl(3L)
+            .build();
+        bookRepository.save(book);
+
+        assertTrue(bookRepository.findById("1").isPresent());
+
+        Thread.sleep(Duration.ofSeconds(5).toMillis());
+        assertFalse(bookRepository.findById("1").isPresent());
+    }
+
+    @Test
+    void cache() {
+        Cache cache = cacheManager.getCache("scores");
+        cache.put("test:1", "Test 1");
+        cache.put("test:2", "Test 2");
+
+        assertEquals("Test 1", cache.get("test:1", String.class));
+        assertEquals("Test 2", cache.get("test:2", String.class));
+
+        // evict the cache
+        cache.evict("test:1");
+        cache.evict("test:2");
+        assertNull(cache.get("test:1", String.class));
+        assertNull(cache.get("test:2", String.class));
+    }
+
+    @Autowired
+    private BookService bookService;
+
+    @Test
+    void cacheable() {
+        Book book = bookService.getBook("1");
+        assertEquals("1", book.getId());
+
+        Book book2 = bookService.getBook("1");
+        assertEquals(book, book2);
+    }
+
+    @Test
+    void cachePut() {
+        Book book = Book.builder().id("2").title("Book 2").price(150L).build();
+        bookService.save(book);
+
+        Book book2 = bookService.getBook("2");
+        assertEquals(book, book2);
+    }
+
+    @Test
+    void remove() {
+        Book book = bookService.getBook("3");
+        assertNotNull(book);
+
+        bookService.remove("3");
+
+        Book book2 = bookService.getBook("3");
+        assertEquals(book, book2);
     }
 }

@@ -40,6 +40,7 @@
 - [x] using temprary storage and db header-detail
 - [x] using spring redis: config, redis template, value, list, set, zset
 - [x] using spring redis: delete, hash, hyper log log, transaction, pipeline, publish, subscribe
+- [x] using spring redis: pubsub, pubsub listener, collection, redis repository, entity time to live, monitoring, spring caching, declarative caching
 
 # PLANNING
 
